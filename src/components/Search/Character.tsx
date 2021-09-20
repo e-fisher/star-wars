@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import useSWR from 'swr'
+
 import { fetchPlanet } from '../../services'
+import CharacterMovies from './CharacterMovies'
 
 type CharacterProps = {
   name: string,
@@ -22,7 +24,7 @@ const Character = ({ name, homeWorldUrl, movieUrls }: CharacterProps) => {
       <button onClick={toggleShowMovies}>show movies</button>
 
       {showMovies && (
-        <div>{movieUrls.join(' ')}</div>
+        <CharacterMovies movieUrls={movieUrls} />
       )}
     </div>
 

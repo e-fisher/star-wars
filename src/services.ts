@@ -28,6 +28,22 @@ export const fetchPlanet = async (url: string) => {
   return Planet.check(planet)
 }
 
+export const Movie = t.Record({
+  title: t.String,
+  release_date: t.String,
+  opening_crawl: t.String,
+  url: t.String,
+})
+
+export const fetchMovie = async (url: string) => {
+  const movie = await fetchCheckOk(url)
+  return Movie.check(movie)
+}
+
+export const fetchMovies = async (urls: string[]) => {
+  return Promise.all(urls.map((url) => fetchMovie(url)))
+}
+
 const fetchCheckOk = async (url: string) => {
   const response = await fetch(url)
   if (!response.ok) {
