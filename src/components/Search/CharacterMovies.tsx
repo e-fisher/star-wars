@@ -2,10 +2,11 @@ import useSWR from 'swr'
 
 import { MovieType } from '../../interfaces'
 import { fetchMovies } from "../../services"
+import Loader from '../Loader'
 
 const CharacterMovies = ({ movieUrls }: { movieUrls: string[] }) => {
   const { data } = useSWR(JSON.stringify(movieUrls), () => fetchMovies(movieUrls))
-  if (!data) { return <div>loading.</div> }
+  if (!data) { return <Loader inline /> }
 
   const movies = sortDateDesc(data).map((movie) => (
     <Movie

@@ -34,16 +34,14 @@ const Name = styled.h2`
 
 const Character = ({ name, homeWorldUrl, movieUrls }: CharacterProps) => {
   const [ showMovies, setShowMovies ] = useState(false)
-  const { data: planet } = useSWR(homeWorldUrl, fetchPlanet)
   const toggleShowMovies = () => setShowMovies(!showMovies)
 
-  if (!planet) { return <div>loading</div> }
   return (
     <div>
       <CharacterRow>
         <Details>
           <Name>{name}</Name>
-          <div>{planet.name}, pop.: {planet.population}</div>
+          <Planet homeWorldUrl={homeWorldUrl} />
         </Details>
         <Button onClick={toggleShowMovies}>show movies</Button>
       </CharacterRow>
@@ -52,6 +50,15 @@ const Character = ({ name, homeWorldUrl, movieUrls }: CharacterProps) => {
         <CharacterMovies movieUrls={movieUrls} />
       )}
     </div>
+  )
+}
+
+const Planet = ({ homeWorldUrl }: { homeWorldUrl: string }) => {
+  const { data: planet } = useSWR(homeWorldUrl, fetchPlanet)
+
+  if (!planet) { return null }
+  return (
+    <div>{planet.name}, pop.: {planet.population}</div>
   )
 }
 
