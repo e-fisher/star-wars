@@ -1,7 +1,7 @@
 import { API_BASE } from "./constants"
 import * as t from 'runtypes'
 
-const Character = t.Record({
+export const Character = t.Record({
   name: t.String,
   films: t.Array(t.String),
   url: t.String,
@@ -19,7 +19,7 @@ export const fetchSearch = async (query: string) => {
   return SearchResults.check(results)
 }
 
-const Planet = t.Record({
+export const Planet = t.Record({
   name: t.String,
   population: t.String,
 })
@@ -45,7 +45,7 @@ export const fetchMovies = async (urls: string[]) => {
   return Promise.all(urls.map((url) => fetchMovie(url)))
 }
 
-const Species = t.Record({
+export const Species = t.Record({
   name: t.String
 })
 
