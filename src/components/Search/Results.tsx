@@ -1,6 +1,6 @@
-import useSWR from 'swr'
 import styled from 'styled-components'
 
+import { useFetch } from '../../hooks/useFetch'
 import { fetchSearch } from '../../services'
 import Character from './Character'
 import Loader from '../Loader'
@@ -14,7 +14,7 @@ const Result = styled.div`
 `
 
 const Results = ({ query }: { query: string }) => {
-  const { data } = useSWR(`/search/${query}`, () => fetchSearch(query))
+  const { data } = useFetch(`/search/${query}`, () => fetchSearch(query))
 
   if (!data) { return <Loader /> }
 

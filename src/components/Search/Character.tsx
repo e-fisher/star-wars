@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import useSWR from 'swr'
 import styled from 'styled-components'
 
+import { useFetch } from '../../hooks/useFetch'
 import { fetchPlanet, fetchMultipleSpecies } from '../../services'
 import CharacterMovies from './CharacterMovies'
 import Button from '../Button'
@@ -61,7 +61,7 @@ const Character = ({ name, homeWorldUrl, movieUrls, species }: CharacterProps) =
 }
 
 const Planet = ({ homeWorldUrl }: { homeWorldUrl: string }) => {
-  const { data: planet } = useSWR(homeWorldUrl, fetchPlanet)
+  const { data: planet } = useFetch(homeWorldUrl, fetchPlanet)
 
   if (!planet) { return null }
   return (
@@ -70,7 +70,7 @@ const Planet = ({ homeWorldUrl }: { homeWorldUrl: string }) => {
 }
 
 const Species = ({ speciesUrls }: { speciesUrls: string[] }) => {
-  const { data: species } = useSWR(JSON.stringify(speciesUrls), () =>
+  const { data: species } = useFetch(JSON.stringify(speciesUrls), () =>
     fetchMultipleSpecies(speciesUrls),
   )
 
