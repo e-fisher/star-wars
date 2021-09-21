@@ -1,5 +1,6 @@
 import { SWRConfig } from 'swr'
 
+import Layout from './components/Layout'
 import Search from './components/Search'
 
 const SWR_CONFIG = {
@@ -11,9 +12,9 @@ const SWR_CONFIG = {
 const App = () => {
   return (
     <SWRConfig value={SWR_CONFIG}>
-      <div className="App">
+      <Layout>
         <Search />
-      </div>
+      </Layout>
     </SWRConfig>
   )
 }

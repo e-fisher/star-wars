@@ -8,7 +8,12 @@ const CharacterMovies = ({ movieUrls }: { movieUrls: string[] }) => {
   if (!data) { return <div>loading.</div> }
 
   const movies = sortDateDesc(data).map((movie) => (
-    <Movie key={movie.url} title={movie.title} releaseDate={movie.release_date} />
+    <Movie
+      key={movie.url}
+      title={movie.title}
+      releaseDate={movie.release_date}
+      openingCrawl={movie.opening_crawl}
+    />
   ))
 
   return (
@@ -16,9 +21,18 @@ const CharacterMovies = ({ movieUrls }: { movieUrls: string[] }) => {
   )
 }
 
-const Movie = ({ title, releaseDate }: { title: string, releaseDate: string }) => {
+type MovieProps = {
+  title: string,
+  releaseDate: string,
+  openingCrawl: string,
+}
+
+const Movie = ({ title, releaseDate, openingCrawl }: MovieProps) => {
   return (
-    <div>{title} {releaseDate}</div>
+    <div>
+      <h3>{title} ({releaseDate})</h3>
+      <p>{truncateString(openingCrawl, 150)}</p>
+    </div>
   )
 }
 
@@ -27,5 +41,9 @@ const sortDateDesc = (array: MovieType[]) => {
     new Date(b.release_date).getTime() - new Date(a.release_date).getTime()
   ))
 }
+
+const truncateString = (str: string, length: number) => (
+  str.substring(0, length) + (str.length > length ? '...' : '')
+)
 
 export default CharacterMovies

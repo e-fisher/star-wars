@@ -9,16 +9,11 @@ const SearchPage = () => {
 
   return (
     <div>
-      <div>
-        Search page
-      </div>
       <Form setQuery={setQuery} />
-      <div>query: {query}</div>
 
       {isQueryValid && (
         <Results query={query} />
       )}
-
     </div>
   )
 }

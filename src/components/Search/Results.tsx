@@ -1,7 +1,18 @@
 import useSWR from 'swr'
+import styled from 'styled-components'
 
 import { fetchSearch } from '../../services'
 import Character from './Character'
+
+const CharacterList = styled.div`
+  > div {
+    border-bottom: 2px solid ${props => props.theme.yellow};
+    padding: 10px 0;
+    &:last-child {
+      border: none;
+    }
+  }
+`
 
 const Results = ({ query }: { query: string }) => {
   const { data } = useSWR(`/search/${query}`, () => fetchSearch(query))
@@ -18,9 +29,9 @@ const Results = ({ query }: { query: string }) => {
   ))
 
   return (
-    <div>
+    <CharacterList>
       {characters}
-    </div>
+    </CharacterList>
   )
 }
 
