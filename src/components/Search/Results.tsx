@@ -1,9 +1,11 @@
 import styled from 'styled-components'
+import { useState, useEffect } from 'react'
 
 import { useFetch } from '../../hooks/useFetch'
 import { fetchSearch } from '../../services'
 import Character from './Character'
 import Loader from '../Loader'
+import Pagination from './Pagination'
 
 const Result = styled.div`
   border-bottom: 2px solid ${props => props.theme.yellow};
@@ -14,7 +16,12 @@ const Result = styled.div`
 `
 
 const Results = ({ query }: { query: string }) => {
-  const { data } = useFetch(`/search/${query}`, () => fetchSearch(query))
+  const [page, setPage] = useState(1)
+  const { data } = useFetch(`search=${query}&page=${page}`, fetchSearch)
+
+  useEffect(() => {
+    setPage(1)
+  }, [query, setPage])
 
   if (!data) { return <Loader /> }
 
@@ -23,9 +30,8 @@ const Results = ({ query }: { query: string }) => {
   }
 
   const characters = data.results.map((character) => (
-    <Result>
+    <Result key={character.url}>
       <Character
-        key={character.url}
         name={character.name}
         homeWorldUrl={character.homeworld}
         movieUrls={character.films}
@@ -36,7 +42,10 @@ const Results = ({ query }: { query: string }) => {
 
   return (
     <div>
-      {characters}
+      <div>{characters}</div>
+      <div>
+        <Pagination count={data.count} setPage={setPage} page={page} />
+      </div>
     </div>
   )
 }

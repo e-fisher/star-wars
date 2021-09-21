@@ -15,7 +15,7 @@ const SearchResults = t.Record({
 })
 
 export const fetchSearch = async (query: string) => {
-  const results = await fetchCheckOk(`${API_BASE}/people/?search=${query}`)
+  const results = await fetchCheckOk(`${API_BASE}/people/?${query}`)
   return SearchResults.check(results)
 }
 
