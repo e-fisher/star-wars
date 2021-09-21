@@ -34,7 +34,7 @@ const Container = styled.div`
 
 const Logo = styled.img`
   max-width: 100%;
-  margin-bottom: 50px;
+  margin: 50px 0;
 `
 
 const Content = styled.div`
