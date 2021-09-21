@@ -18,14 +18,16 @@ const Input = styled.input`
   text-align: center;
 `
 
-const Form = ({ setQuery }: any) => (
+type SetQuery = (query: string) => void
+
+const Form = ({ setQuery }: { setQuery: SetQuery }) => (
   <StyledForm onSubmit={handleSubmit(setQuery)}>
     <Input name="query" placeholder="Search Star Wars Characters" />
     <Button style={{ fontSize: '24px' }}>Submit</Button>
   </StyledForm>
 )
 
-const handleSubmit = (setQuery: any) => (e: React.SyntheticEvent) => {
+const handleSubmit = (setQuery: SetQuery) => (e: React.SyntheticEvent) => {
   e.preventDefault()
   const target = e.target as typeof e.target & {
     query: { value: string }
