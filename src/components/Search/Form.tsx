@@ -18,12 +18,16 @@ const Input = styled.input`
   text-align: center;
 `
 
+const SubmitButton = styled(Button)`
+  font-size: 24px;
+`
+
 type SetQuery = (query: string) => void
 
 const Form = ({ setQuery }: { setQuery: SetQuery }) => (
   <StyledForm onSubmit={handleSubmit(setQuery)}>
     <Input name="query" placeholder="Search Star Wars Characters" />
-    <Button style={{ fontSize: '24px' }}>Submit</Button>
+    <SubmitButton style={{ fontSize: '24px' }}>Submit</SubmitButton>
   </StyledForm>
 )
 
