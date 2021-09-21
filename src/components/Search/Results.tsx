@@ -18,6 +18,10 @@ const Results = ({ query }: { query: string }) => {
 
   if (!data) { return <Loader /> }
 
+  if (data.results.length === 0) {
+    return <div>No results - try different keyword</div>
+  }
+
   const characters = data.results.map((character) => (
     <Result>
       <Character
