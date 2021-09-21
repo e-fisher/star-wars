@@ -30,7 +30,8 @@ const handleSubmit = (setQuery: any) => (e: React.SyntheticEvent) => {
   const target = e.target as typeof e.target & {
     query: { value: string }
   }
-  setQuery(target.query.value)
+
+  setQuery(target.query.value.trim())
 }
 
 export default Form
