@@ -2,15 +2,9 @@ import { useState } from 'react'
 import useSWR from 'swr'
 import styled from 'styled-components'
 
-import { fetchPlanet } from '../../services'
+import { fetchPlanet, fetchMultipleSpecies } from '../../services'
 import CharacterMovies from './CharacterMovies'
 import Button from '../Button'
-
-type CharacterProps = {
-  name: string,
-  homeWorldUrl: string,
-  movieUrls: string[]
-}
 
 const CharacterRow = styled.div`
   display: flex;
@@ -30,9 +24,20 @@ const Details = styled.div`
 const Name = styled.h2`
   font-size: 24px;
   margin: 0;
+  span {
+    font-size: 16px;
+    font-weight: 300;
+  }
 `
 
-const Character = ({ name, homeWorldUrl, movieUrls }: CharacterProps) => {
+type CharacterProps = {
+  name: string,
+  homeWorldUrl: string,
+  movieUrls: string[],
+  species: string[],
+}
+
+const Character = ({ name, homeWorldUrl, movieUrls, species }: CharacterProps) => {
   const [ showMovies, setShowMovies ] = useState(false)
   const toggleShowMovies = () => setShowMovies(!showMovies)
 
@@ -40,7 +45,9 @@ const Character = ({ name, homeWorldUrl, movieUrls }: CharacterProps) => {
     <div>
       <CharacterRow>
         <Details>
-          <Name>{name}</Name>
+          <Name>
+            {name} <span><Species speciesUrls={species} /></span>
+          </Name>
           <Planet homeWorldUrl={homeWorldUrl} />
         </Details>
         <Button onClick={toggleShowMovies}>show movies</Button>
@@ -59,6 +66,19 @@ const Planet = ({ homeWorldUrl }: { homeWorldUrl: string }) => {
   if (!planet) { return null }
   return (
     <div>{planet.name}, pop.: {planet.population}</div>
+  )
+}
+
+const Species = ({ speciesUrls }: { speciesUrls: string[] }) => {
+  const { data: species } = useSWR(JSON.stringify(speciesUrls), () =>
+    fetchMultipleSpecies(speciesUrls),
+  )
+
+  if (!species) { return null }
+  if (species.length === 0) { return <>Human</> }
+
+  return (
+    <>{species.map(spc => spc.name).join(' ')}</>
   )
 }
 

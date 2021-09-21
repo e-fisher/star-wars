@@ -25,6 +25,7 @@ const Results = ({ query }: { query: string }) => {
         name={character.name}
         homeWorldUrl={character.homeworld}
         movieUrls={character.films}
+        species={character.species}
       />
     </Result>
   ))

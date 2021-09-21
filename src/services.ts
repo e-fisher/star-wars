@@ -6,6 +6,7 @@ const Character = t.Record({
   films: t.Array(t.String),
   url: t.String,
   homeworld: t.String,
+  species: t.Array(t.String)
 })
 
 const SearchResults = t.Record({
@@ -35,13 +36,26 @@ export const Movie = t.Record({
   url: t.String,
 })
 
-export const fetchMovie = async (url: string) => {
+const fetchMovie = async (url: string) => {
   const movie = await fetchCheckOk(url)
   return Movie.check(movie)
 }
 
 export const fetchMovies = async (urls: string[]) => {
   return Promise.all(urls.map((url) => fetchMovie(url)))
+}
+
+const Species = t.Record({
+  name: t.String
+})
+
+const fetchSpecies = async (url: string) => {
+  const species = await fetchCheckOk(url)
+  return Species.check(species)
+}
+
+export const fetchMultipleSpecies = async (urls: string[]) => {
+  return Promise.all(urls.map((url) => fetchSpecies(url)))
 }
 
 const fetchCheckOk = async (url: string) => {
